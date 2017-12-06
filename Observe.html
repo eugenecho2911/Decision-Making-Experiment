@@ -1,0 +1,200 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Scores Provided for Each Player
+{% endblock %}
+
+{% block content %}
+
+    <p>The results are shown in the following table.</p>
+    <table class="table table-test" style="width:400px; margin-bottom:10px">
+        <tr>
+            <td>Your Contribution:</td>
+            <td>{{ player.units }} units</td>
+        </tr>
+
+        <tr>
+            <td>Other Player 1's Contribution:</td>
+            <td>{{ player.other_player.1.units }} units</td>
+        </tr>
+
+        <tr>
+            <td>Other Player 2's Contribution:</td>
+            <td>{{ player.other_player.2.units }} units</td>
+        </tr>
+
+        <tr>
+            <td>Group Contribution:</td>
+            <td>{{group.total_units }} units</td>
+        </tr>
+    </table>
+{% endblock %}
+
+{% block content %}
+    <p>
+        You now provide score for each of the three members of the group, including yourself.
+        The score could be any number from 0 to {{ Constants.endowment }}.
+    </p>
+{% endblock %}
+
+{% block title %}
+    Provide a Score for Other Player 1
+{% endblock %}
+
+{% block styles %}
+<link href="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
+<style type="text/css">
+    .score-slider {
+        margin: 1.5em auto;
+        width: 70%;
+    }
+    .score {
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="form-group required">
+        <label class="control-label" for="id_score_amount">
+            Please provide a score for Other Player 1 (from 0 to {{ Constants.endowment }}):</label>
+        <div class="controls">
+            <input type="hidden" name="score_amount" id="id_score_amount" value="0">
+            <div class="score-slider"></div>
+            <div class="score">Your score for Other Player 1: <strong><span class="score-value"></span></strong></div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.js" %}"></script>
+<script>
+jQuery(document).ready(function ($) {
+    var input = $('#id_score_amount');
+    $('.score-slider').slider({
+        min: 0,
+        max: {{ Constants.endowment|json }},
+        slide: function (event, ui) {
+            input.val(ui.value);
+            updateScoreValue();
+        },
+    });
+    function updateScoreValue() {
+        $('.score-value').text(input.val());
+    }
+    updateScoreValue();
+});
+</script>
+{% endblock %}
+
+{% block title %}
+    Provide a Score for Other Player 2
+{% endblock %}
+
+{% block styles %}
+<link href="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
+<style type="text/css">
+    .score-slider {
+        margin: 1.5em auto;
+        width: 70%;
+    }
+    .score {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="form-group required">
+        <label class="control-label" for="id_score_amount">
+            Please provide a score for Other Player 2 (from 0 to {{ Constants.endowment }}):</label>
+        <div class="controls">
+            <input type="hidden" name="score_amount" id="id_score_amount" value="0">
+            <div class="score-slider"></div>
+            <div class="score">Your score for Other Player 2: <strong><span class="score-value"></span></strong></div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.js" %}"></script>
+<script>
+jQuery(document).ready(function ($) {
+    var input = $('#id_score_amount');
+    $('.score-slider').slider({
+        min: 0,
+        max: {{ Constants.endowment|json }},
+        slide: function (event, ui) {
+            input.val(ui.value);
+            updateScoreValue();
+        },
+    });
+    function updateScoreValue() {
+        $('.score-value').text(input.val());
+    }
+    updateScoreValue();
+});
+</script>
+{% endblock %}
+
+{% block title %}
+    Provide a Score for Yourself
+{% endblock %}
+
+{% block styles %}
+<link href="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
+<style type="text/css">
+    .score-slider {
+        margin: 1.5em auto;
+        width: 70%;
+    }
+    .score {
+        text-align: right;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="form-group required">
+        <label class="control-label" for="id_score_amount">
+            Please provide a score for yourself (from 0 to {{ Constants.endowment }}):</label>
+        <div class="controls">
+            <input type="hidden" name="score_amount" id="id_score_amount" value="0">
+            <div class="score-slider"></div>
+            <div class="score">Your score for yourself: <strong><span class="score-value"></span></strong></div>
+        </div>
+    </div>
+
+    {% next_button %}
+
+    {% include Constants.instructions_template %}
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.js" %}"></script>
+<script>
+jQuery(document).ready(function ($) {
+    var input = $('#id_score_amount');
+    $('.score-slider').slider({
+        min: 0,
+        max: {{ Constants.endowment|json }},
+        slide: function (event, ui) {
+            input.val(ui.value);
+            updateScoreValue();
+        },
+    });
+    function updateScoreValue() {
+        $('.score-value').text(input.val());
+    }
+    updateScoreValue();
+});
+</script>
+{% endblock %}
