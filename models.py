@@ -2,7 +2,7 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
-
+from statistics import median
 
 author = 'Eugene Cho'
 
@@ -33,10 +33,9 @@ class Group(BaseGroup):
         self.contribution = [(p, p.contribution) for p in self.get_players()]
         self.total_contribution = sum([p.contribution for p in self.get_players()])
         for p in self.get_players():
-            p.individual_grade = Constants.multiplier * (3 * score_median) - 0.5 * (3 * score_median)^2
+            p.individual_score = statistics.median(score_p1, score_p2, score_3)
+            p.individual_grade = Constants.multiplier * (3 * individual_score) - 0.5 * (3 * individual_score)^2
             p.group_grade = Constants.multiplier * (self.total_contribution) - 0.5 * (self.total_contribution)^2
-            p.individual_score = median(score_p1, score_p2, score_3)
-            p.score_median =  median(individual_score_p1, individual_score_p2, individual_score_p3)
 
     def set_final_payoffs(self):
         self.total_contribution = sum([p.contribution for p in self.get_players()])
@@ -50,14 +49,33 @@ class Player(BasePlayer):
     score_median = models.FloatField()
 
     endowment = models.FloatField(
-        min=0, max=Constants.endowment,
+        min=0,
+        max=Constants.endowment,
         doc="""player's tokens"""
     )
 
     contribution = models.FloatField(
         min=0, max=Constants.endowment,
-        doc="""player's tokens"""
+        doc="""player's tokens""",
+        widget=widgets.SliderInput(attrs={'step':'0.1'})
     )
+
+    eval_p1 =  models.FloatField(
+        min=0, max=Constants.endowment,
+        doc="""This player's evaluation of player 1""",
+        widget=widgets.SliderInput(attrs={'step':'0.1'})
+    )
+    eval_p2 =  models.FloatField(
+        min=0, max=Constants.endowment,
+        doc="""This player's evaluation of player 2""",
+        widget=widgets.SliderInput(attrs={'step':'0.1'})
+    )
+    eval_p3 =  models.FloatField(
+        min=0, max=Constants.endowment,
+        doc="""This player's evaluation of player 3""",
+        widget=widgets.SliderInput(attrs={'step':'0.1'})
+    )
+
 
     contribution_p1 = models.FloatField(
         min=0, max=Constants.endowment,
@@ -121,3 +139,4 @@ class Player(BasePlayer):
     final_grade_p3 = models.FloatField(
         doc="""This is Player 3's final grade.""",
     )
+
