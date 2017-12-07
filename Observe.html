@@ -11,22 +11,22 @@
     <table class="table table-test" style="width:400px; margin-bottom:10px">
         <tr>
             <td>Your Contribution:</td>
-            <td>{{ player.units }} units</td>
+            <td>{{ p1_contrib }} units</td>
         </tr>
 
         <tr>
             <td>Other Player 1's Contribution:</td>
-            <td>{{ player.other_player.1.units }} units</td>
+            <td>{{ p2_contrib }} units</td>
         </tr>
 
         <tr>
             <td>Other Player 2's Contribution:</td>
-            <td>{{ player.other_player.2.units }} units</td>
+            <td>{{ p3_contrib }} units</td>
         </tr>
 
         <tr>
             <td>Group Contribution:</td>
-            <td>{{group.total_units }} units</td>
+            <td>{{ total_contrib }} units</td>
         </tr>
     </table>
 
@@ -47,54 +47,11 @@ Player 2 contributed {{ p2_contrib }}
 Player 3 contributed {{ p3_contrib }}
 <p>{{ form.eval_p3 }}</p>
 
-
-
-    <div class="form-group required">
-        <label class="control-label" for="id_score_amount">
-            Please provide a score for Other Player 1 (from 0 to {{ Constants.endowment }}):</label>
-        <div class="controls">
-            <input type="hidden" name="score_amount" id="id_score_amount" value="0">
-            <div class="score-slider"></div>
-            <div class="score">Your score for Other Player 1: <strong><span class="score-value"></span></strong></div>
-        </div>
-    </div>
-
-    <div class="form-group required">
-        <label class="control-label" for="id_score_amount">
-            Please provide a score for Other Player 2 (from 0 to {{ Constants.endowment }}):</label>
-        <div class="controls">
-            <input type="hidden" name="score_amount" id="id_score_amount" value="0">
-            <div class="score-slider"></div>
-            <div class="score">Your score for Other Player 2: <strong><span class="score-value"></span></strong></div>
-        </div>
-    </div>
-
-    <div class="form-group required">
-        <label class="control-label" for="id_score_amount">
-            Please provide a score for yourself (from 0 to {{ Constants.endowment }}):</label>
-        <div class="controls">
-            <input type="hidden" name="score_amount" id="id_score_amount" value="0">
-            <div class="score-slider"></div>
-            <div class="score">Your score for yourself: <strong><span class="score-value"></span></strong></div>
-        </div>
-    </div>
-
     {% next_button %}
 
     {% include Constants.instructions_template %}
 
-
-
 {% endblock %}
-
-
-
-
-
-
-
-
-
 
 {% block styles %}
 <link href="{% static "Decision_Making_Experiment/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
