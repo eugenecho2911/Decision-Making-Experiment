@@ -24,6 +24,7 @@ class Observe(Page):
             'p1_contrib':self.group.get_player_by_id(1).contribution,
             'p2_contrib':self.group.get_player_by_id(2).contribution,
             'p3_contrib':self.group.get_player_by_id(3).contribution,
+            'total_contrib':self.group.total_contribution,
         }
 
 class ResultsWaitPage(WaitPage):
@@ -37,19 +38,18 @@ class Results(Page):
     """Players payoff: How much each has earned"""
     def vars_for_template(self):
         return {
-            'Your Contribution': p1_contrib,
-            'Other Player 1 Contribution':None,
-            'Other Player 2 Contribution':None,
-            'Total Contribution':None,
-            'Your Score':None,
-            'Other Player 1 Score':None,
-            'Other Player 2 Score':None,
-            'Median Score':None,
-            'Your Remaining Tokens':None,
-            'Group Grade':None,
-            'Your Individual Grade':None,
-            'Your Final Grade':None,
-            'diff_endow_contrib':Constants.endowment - self.player.units
+            'p1_contrib':self.group.get_player_by_id(1).contribution,
+            'p2_contrib':self.group.get_player_by_id(2).contribution,
+            'p3_contrib':self.group.get_player_by_id(3).contribution,
+            'total_contrib':self.group.total_contribution,
+            'p1_score':self.group.get_player_by_id(1).individual_score,
+            'p2_score':self.group.get_player_by_id(2).individual_score,
+            'p3_score':self.group.get_player_by_id(3).individual_score,
+            'median_score':statistics.median(self.group.get_player_by_id(1).individual_score, self.group.get_player_by_id(2).individual_score, self.group.get_player_by_id(3).individual_score,),
+            'p1_remainder_tokens':None,
+            'group_grade':self.group.get_player_by_id(1).group_grade,
+            'p1_individual_grade':self.group.get_player_by_id(1).individual_grade,
+            'p1_final_grade':self.group.get_player_by_id(1).final_grade,
         }
 
 page_sequence = [
@@ -60,4 +60,3 @@ page_sequence = [
     ResultsWaitPage,
     Results
 ]
-
